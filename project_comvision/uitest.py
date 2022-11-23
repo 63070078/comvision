@@ -7,8 +7,12 @@ import subprocess
 def run_lipstick():
     subprocess.call(["python", "lipstick.py"])
 
-def run_changeeyes():
-    subprocess.call(["python", "changeeyes.py"])
+def run_eyes():
+    subprocess.call(["python", "eyestest.py"])
+
+def run_eyesbrows():
+    subprocess.call(["python", "eyebrowstest.py"])
+
 
 
 class Root(Tk):
@@ -24,7 +28,8 @@ class Root(Tk):
 
         #button
         btn2 = Button(text="Change lipstick color", command=run_lipstick).place(x=145, y=100)
-        btn3 = Button(text="Change eyes color", command=run_changeeyes).place(x=150, y=150)
+        btn3 = Button(text="Change eyes color", command=run_eyes).place(x=150, y=150)
+        btn4 = Button(text="Change eyebrows color", command=run_eyesbrows).place(x=140, y=200)
 
 
 

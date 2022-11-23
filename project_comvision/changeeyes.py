@@ -78,8 +78,20 @@ def createIrisMask(iris, centroid):
     return irisMask, inverseIrisMask
 
 
-def changeEyeColor(im, irisMask, inverseIrisMask):
-    imCopy = cv2.applyColorMap(im, cv2.COLORMAP_TWILIGHT_SHIFTED)
+def applyCustomColorMap(red, green, blue, im_gray) :
+    lut = np.zeros((256, 1, 3), dtype=np.uint8)
+    lut[:,0,0] = np.arange(256)
+    lut[:,0,1] = np.arange(256)
+    lut[:,0,2] = np.arange(256)
+    lut[:,0,0] = np.clip(lut[:,0,0] + blue, 0, 255)
+    lut[:,0,1] = np.clip(lut[:,0,1] + green, 0, 255)
+    lut[:,0,2] = np.clip(lut[:,0,2] + red, 0, 255)
+    im_color = cv2.LUT(im_gray, lut)
+
+
+def changeEyeColor(im, irisMask, inverseIrisMask): 
+    colorMap = applyCustomColorMap(255, 0, 0, im) 
+    imCopy = cv2.applyColorMap(im, colorMap)
     imCopy = imCopy.astype(float)/255
     irisMask = irisMask.astype(float)/255
     inverseIrisMask = inverseIrisMask.astype(float)/255
