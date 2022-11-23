@@ -5,7 +5,21 @@ import numpy as np
 
 
 # Load Image
-im = cv2.imread("girl.jpg")
+im = cv2.imread("tae.jpg")
+im = cv2.resize(im,(0,0),None,0.5,0.5)
+
+def empty(a):
+    pass
+cv2.namedWindow('BGR')
+cv2.resizeWindow('BGR',440,140)
+cv2.createTrackbar('Blue','BGR',0,255,empty)
+cv2.createTrackbar('Green','BGR',0,255,empty)
+cv2.createTrackbar('Red','BGR',0,255,empty)
+
+#ดึงค่า bgr
+b = cv2.getTrackbarPos('Blue','BGR')
+g = cv2.getTrackbarPos('Green','BGR')
+r = cv2.getTrackbarPos('Red','BGR')
 
 # Detect face landmarks
 PREDICTOR_PATH = r"D:\\project_comvision\shape_predictor_68_face_landmarks.dat"
@@ -63,6 +77,7 @@ def createIrisMask(iris, centroid):
 
     return irisMask, inverseIrisMask
 
+
 def changeEyeColor(im, irisMask, inverseIrisMask):
     imCopy = cv2.applyColorMap(im, cv2.COLORMAP_TWILIGHT_SHIFTED)
     imCopy = imCopy.astype(float)/255
@@ -102,5 +117,5 @@ coloredEyesLady = float642Uint8(coloredEyesLady)
 coloredEyesLady = changeEyeColor(coloredEyesLady, leftIrisMask, leftInverseIrisMask)
 
 # Present results
-cv2.imshow("", coloredEyesLady)
+cv2.imshow("BGR", coloredEyesLady)
 cv2.waitKey(0)
